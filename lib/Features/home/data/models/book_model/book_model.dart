@@ -1,21 +1,19 @@
-import 'package:equatable/equatable.dart';
+import 'package:bookly/Features/home/domain/entities/book_entity.dart';
 
 import 'access_info.dart';
 import 'sale_info.dart';
-import 'search_info.dart';
 import 'volume_info.dart';
 
-class BookModel extends Equatable {
-  final String? kind;
-  final String? id;
-  final String? etag;
-  final String? selfLink;
-  final VolumeInfo? volumeInfo;
-  final SaleInfo? saleInfo;
-  final AccessInfo? accessInfo;
-  final SearchInfo? searchInfo;
+class BookModel extends BookEntity {
+  String? kind;
+  String? id;
+  String? etag;
+  String? selfLink;
+  VolumeInfo? volumeInfo;
+  SaleInfo? saleInfo;
+  AccessInfo? accessInfo;
 
-  const BookModel({
+  BookModel({
     this.kind,
     this.id,
     this.etag,
@@ -23,8 +21,12 @@ class BookModel extends Equatable {
     this.volumeInfo,
     this.saleInfo,
     this.accessInfo,
-    this.searchInfo,
-  });
+  }) : super(
+            image: volumeInfo?.imageLinks?.thumbnail ?? "",
+            title: volumeInfo!.title!,
+            authorName: volumeInfo?.authors?.first ?? "un known auther",
+            rating: volumeInfo.ratingsCount,
+            avg: volumeInfo.averageRating);
 
   factory BookModel.fromJson(Map<String, dynamic> json) => BookModel(
         kind: json['kind'] as String?,
@@ -40,9 +42,6 @@ class BookModel extends Equatable {
         accessInfo: json['accessInfo'] == null
             ? null
             : AccessInfo.fromJson(json['accessInfo'] as Map<String, dynamic>),
-        searchInfo: json['searchInfo'] == null
-            ? null
-            : SearchInfo.fromJson(json['searchInfo'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {
@@ -53,20 +52,5 @@ class BookModel extends Equatable {
         'volumeInfo': volumeInfo?.toJson(),
         'saleInfo': saleInfo?.toJson(),
         'accessInfo': accessInfo?.toJson(),
-        'searchInfo': searchInfo?.toJson(),
       };
-
-  @override
-  List<Object?> get props {
-    return [
-      kind,
-      id,
-      etag,
-      selfLink,
-      volumeInfo,
-      saleInfo,
-      accessInfo,
-      searchInfo,
-    ];
-  }
 }
