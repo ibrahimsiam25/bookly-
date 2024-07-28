@@ -12,6 +12,7 @@ class FetchFeaturedBooksUseCase extends UseCase {
 
   @override
   Future<Either<Failure, List<BookEntity>>> call() async {
+    //if you need to cheak and return anther thing  , you can do this here
     return await homeRepo.fetchFeaturedBooks();
   }
 }
