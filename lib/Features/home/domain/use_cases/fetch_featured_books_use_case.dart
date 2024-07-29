@@ -13,6 +13,16 @@ class FetchFeaturedBooksUseCase extends UseCase {
   @override
   Future<Either<Failure, List<BookEntity>>> call() async {
     //if you need to cheak and return anther thing  , you can do this here
+ final result = await homeRepo.fetchFeaturedBooks();
+
+    result.fold(
+      (failure) => print('Error fetching featured books: ${failure.errmsg}'),
+      (books) {
+        final length = books.length;
+        print('Number of featured books: $length');
+        return Right(books); // Return the books for further processing
+      },
+    );
     return await homeRepo.fetchFeaturedBooks();
   }
 }
