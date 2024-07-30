@@ -16,11 +16,11 @@ class HomRepoImpl extends HomeRepo {
   Future<Either<Failure, List<BookEntity>>> fetchFeaturedBooks({int pageNumber =0}) async {
     try {
       List<BookEntity> bookList;
-      bookList = await homeLocalDataSource.fetchFeaturedBooks();
+      bookList = await homeLocalDataSource.fetchFeaturedBooks(pageNumber: pageNumber);
       if (bookList.isNotEmpty) {
         return right(bookList);
       }
-      bookList = await homeRemoteDataSource.fetchFeaturedBooks();
+      bookList = await homeRemoteDataSource.fetchFeaturedBooks(pageNumber: pageNumber);
       return right(bookList);
     } catch (e) {
       if(e is DioException){

@@ -10,6 +10,13 @@ sealed class FeaturedBooksState extends Equatable {
 final class FeaturedBooksInitial extends FeaturedBooksState {}
 
 final class FeaturedBooksLoading extends FeaturedBooksState {}
+final class FeaturedBooksPagenagtionLoading extends FeaturedBooksState {}
+final class FeaturedBooksPagenagtionFailure extends FeaturedBooksState {
+   final String errmsg;
+
+ 
+  const  FeaturedBooksPagenagtionFailure(this.errmsg);
+}
 
 final class FeaturedBooksFailure extends FeaturedBooksState {
   final String errmsg;
